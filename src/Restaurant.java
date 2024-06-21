@@ -88,20 +88,22 @@ public class Restaurant {
         ArrayList<Customer> customers = new ArrayList<>();
         ArrayList<Reservation> reservations = new ArrayList<>();
         ArrayList<Table> tables = new ArrayList<>();
-        Waitlist waitlist = new Waitlist();
         ArrayList<Food> foods = new ArrayList<>();
         ArrayList<Order> orders = new ArrayList<>();
         ArrayList<Bill> bills = new ArrayList<>();
         ArrayList<Review> reviews = new ArrayList<>();
+        boolean noTable = true;
         int countOrder = -1;
         int countReservation = -1;
         int customerCount = -1;
         int countBill = -1;
+        Restaurant.readTables(tables);
 
         Restaurant.readMenu(foods);
 
         int choice = 0;
         do {
+            noTable = true;
             System.out.println("++++++++++++++++++++++++++++++");
             System.out.println("| WELCOME TO OUR RESTAURANT! |");
             System.out.println("++++++++++++++++++++++++++++++");
@@ -125,8 +127,10 @@ public class Restaurant {
 
                 case 1:
                     System.out.println("| Please provide your personal information as below: ");
-                    System.out.print("Name      : ");
-                    String name = sc.nextLine();
+                    System.out.print("First Name: ");
+                    String firstName = sc.nextLine();
+                    System.out.print("Last Name : ");
+                    String lastName = sc.nextLine();
                     System.out.print("Phone No. : ");
                     String phone = sc.nextLine();
                     System.out.print("Email     : ");
@@ -140,42 +144,50 @@ public class Restaurant {
                     int customerChoice = sc.nextInt();
                     sc.nextLine();
                     if (customerChoice == 1) {
-                        customers.add(new VIP(name, phone, email));
+                        customers.add(new VIP(firstName, lastName, phone, email));
                     } else {
-                        customers.add(new Regular(name, phone, email));
+                        customers.add(new Regular(firstName, lastName, phone, email));
                     }
                     customerCount++;
 
-                    System.out.println();
-                    int numOfPeople;
                     do {
-                        System.out.print("Enter the Number of People (Max 6): ");
-                        numOfPeople = sc.nextInt();
-                        sc.nextLine();
-                        if (numOfPeople > 6) {
-                            System.out.println("** Please enter valid capacity...");
+                        System.out.println();
+                        int numOfPeople;
+                        do {
+                            System.out.print("Enter the Number of People (Max 6): ");
+                            numOfPeople = sc.nextInt();
+                            sc.nextLine();
+                            if (numOfPeople > 6) {
+                                System.out.println("** Please enter valid capacity...");
+                            }
+                        } while (numOfPeople > 6);
+
+                        LocalDateTime resStartTime = Restaurant.setStartTime(sc);
+                        LocalDateTime resEndTime = Restaurant.setEndTime(sc);
+                        TimeSession session = new TimeSession(resStartTime, resEndTime);
+                        
+
+                        Reservation reservation = new Reservation(numOfPeople, customers.get(customerCount), null, session);
+                        
+                        int i = 0;
+                        for (Table table : tables) {
+                            if (table.getAvailable(session) && table.getCapacity() >= numOfPeople) {
+                                reservation.confirm(table, session);
+                                tables.set(i, table);
+                                reservations.add(reservation);
+                                countReservation++;
+                                noTable = false;
+                                break;
+                            }
+                            i++;
                         }
-                    } while (numOfPeople > 6);
+                        
 
-                    LocalDateTime resStartTime = Restaurant.setStartTime(sc);
-                    LocalDateTime resEndTime = Restaurant.setEndTime(sc);
-                    TimeSession session = new TimeSession(resStartTime, resEndTime);
-
-                    // Read all tables from files
-                    Restaurant.readTables(tables);
-
-                    Reservation reservation = new Reservation(numOfPeople, customers.get(customerCount), null, session);
-
-                    for (Table table : tables) {
-                        if (table.getAvailable(session) && table.getCapacity() >= numOfPeople) {
-                            reservation.confirm(table, session);
-                            reservations.add(reservation);
-                            countReservation++;
-                            break;
-                        } else {
-                            waitlist.addToWaitlist(reservation);
+                        if (noTable) {
+                            System.out.println("Please pick different table or time...");
                         }
-                    }
+                        
+                    } while (noTable);
 
                     // order
                     System.out.println();
@@ -201,6 +213,7 @@ public class Restaurant {
                                 foodList.add(food);
                             }
                         }
+
                     } while (foodChoice != 0);
                     // add to list
                     Order order = new Order(customers.get(customerCount), foodList);
@@ -234,8 +247,8 @@ public class Restaurant {
                         success = payment.processPayment(bills.get(countBill), sc);
                         System.out.println();
                     } while (!success);
-                    break;
 
+                    break;
                 case 3:
                     Review review = new Review();
                     System.out.print("Please enter your name: ");

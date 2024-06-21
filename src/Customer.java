@@ -1,8 +1,8 @@
-abstract class Customer extends User {
+abstract class Customer extends User implements Discountable {
     private int custID;
 
-    public Customer(String name, String phone, String email) {
-        super(name, phone, email);
+    public Customer(String firstName, String lastName, String phone, String email) {
+        super(firstName, lastName, phone, email);
         custID++;
     }
 
@@ -10,5 +10,6 @@ abstract class Customer extends User {
         return custID;
     }
 
-    abstract double getDiscount();
+    @Override
+    public abstract double getDiscount();
 }

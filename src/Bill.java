@@ -16,6 +16,8 @@ public class Bill {
     }
 
     public void getBillDetails() {
-
+        System.out.println("Bill ID: "+billID);
+        order.displayOrders();
+        System.out.println("Discounted Price: "+ discountedPrice);
     }
 }

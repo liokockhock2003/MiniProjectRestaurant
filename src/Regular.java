@@ -1,11 +1,12 @@
 public class Regular extends Customer {
     private double regularDiscount;
 
-    public Regular(String name, String phone, String email) {
-        super(name, phone, email);
+    public Regular(String firstName, String lastName, String phone, String email) {
+        super(firstName, lastName, phone, email);
         this.regularDiscount = 0;
     }
 
+    @Override
     public double getDiscount() {
         return regularDiscount;
     }
