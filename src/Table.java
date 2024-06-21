@@ -5,17 +5,17 @@ public class Table {
     private int capacity;
     private ArrayList<TimeSession> timeSessions;
 
-    public Table(int tableId, int capacity){
+    public Table(int tableId, int capacity) {
         this.tableId = tableId;
         this.capacity = capacity;
         this.timeSessions = new ArrayList<>();
     }
 
-    public void reserveTable(TimeSession session){
+    public void reserveTable(TimeSession session) {
         timeSessions.add(session);
     }
 
-    public void releaseTable(TimeSession session){
+    public void releaseTable(TimeSession session) {
         timeSessions.remove(session);
     }
 
@@ -28,6 +28,11 @@ public class Table {
         return true;
     }
 
-    public int getTableId() { return tableId; }
-    public int getCapacity() { return capacity; }
+    public int getTableId() {
+        return tableId;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
 }

@@ -4,18 +4,18 @@ public class Bill {
     private Order order;
     private double discountedPrice;
 
-    public Bill(Order order){
+    public Bill(Order order) {
         count++;
         this.billID = count;
         this.order = order;
         discountedPrice = order.getTotalPrice() - (order.getTotalPrice() * order.getCustomer().getDiscount());
     }
-    
-    public double getDiscountedPrice(){
+
+    public double getDiscountedPrice() {
         return discountedPrice;
     }
 
-    public void getBillDetails(){
-        
+    public void getBillDetails() {
+
     }
 }

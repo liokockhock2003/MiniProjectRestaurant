@@ -5,7 +5,7 @@ public class Waitlist {
     private boolean status;
     private ArrayList<Reservation> waitlist;
 
-    public Waitlist(){
+    public Waitlist() {
         this.waitlist = new ArrayList<>();
     }
 
@@ -22,15 +22,16 @@ public class Waitlist {
     }
 
     // public Reservation promoteFromWaitlist(ArrayList<Table> tables) {
-    //     for (Reservation reservation : waitlist) {
-    //         for (Table table : tables) {
-    //             if (table.getAvailable() && table.getCapacity() >= reservation.getNumberOfPeople()) {
-    //                 reservation.confirm(table);
-    //                 waitlist.remove(reservation);
-    //                 return reservation;
-    //             }
-    //         }
-    //     }
-    //     return null;
+    // for (Reservation reservation : waitlist) {
+    // for (Table table : tables) {
+    // if (table.getAvailable() && table.getCapacity() >=
+    // reservation.getNumberOfPeople()) {
+    // reservation.confirm(table);
+    // waitlist.remove(reservation);
+    // return reservation;
+    // }
+    // }
+    // }
+    // return null;
     // }
 }
