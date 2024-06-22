@@ -1,1 +1,9 @@
-Miniproject: Restaurant System
+Mini project: Restaurant Reservation System
+
+SECJ2154 Object-Oriented Programming
+
+Group Members:
+1. LIO KOCK HOCK
+2. AHMAD SAIFUDIN BIN NARDI SUSANTO
+3. NUR HANISAH IZZATI BINTI ABDUL HANIFF
+4. MUHAMMAD SHAHIR BIN ROSWADI
