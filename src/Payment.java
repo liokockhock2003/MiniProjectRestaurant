@@ -12,9 +12,6 @@ public class Payment {
     }
 
     public boolean processPayment(Bill bill, Scanner sc) {
-        // interface step payment
-        // output input di sini
-        // return succes or not
         boolean success = false;
         double discountedPrice = bill.getDiscountedPrice();
         double payAmount = 0;
@@ -28,6 +25,7 @@ public class Payment {
             success = true;
             balance = payAmount - discountedPrice;
             System.out.println("The return balance: RM " + balance);
+            System.out.println("Payment Successful! Thank you!");
         } else {
             success = false;
             balance = discountedPrice - payAmount;

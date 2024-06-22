@@ -26,6 +26,18 @@ public class Reservation {
         }
     }
 
+    public Customer getCustomer(){
+        return customer;
+    }
+
+    public Table getTable(){
+        return table;
+    }
+
+    public TimeSession getTimeSession(){
+        return session;
+    }
+
     public void displayReservation() {
         System.out.println("Reservation ID  : " + reservationID);
         System.out.println("Customer Name   : " + customer.getName());

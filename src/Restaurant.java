@@ -59,8 +59,8 @@ public class Restaurant {
                 System.out.println("You entered: " + resStart);
                 return resStart;
             } catch (DateTimeParseException e) {
-                System.out.println("*** Invalid date and time format.");
-                System.out.println("*** Please enter the date in yyyy-MM-dd HH:mm format.");
+                System.out.println("Invalid date and time format.");
+                System.out.println("Please enter the date in yyyy-MM-dd HH:mm format.");
             }
         }
     }
@@ -221,7 +221,9 @@ public class Restaurant {
                     countOrder++;
 
                     // display
+                    System.out.println("---------------------------");
                     reservations.get(countReservation).displayReservation();
+                    System.out.println("---------------------------");
                     orders.get(countOrder).displayOrders();
 
                     break;
@@ -233,20 +235,38 @@ public class Restaurant {
                     System.out.println("+++++++++++++++++++++++");
                     System.out.print("Enter order ID: ");
                     int orderID = sc.nextInt();
+                    Order payingOrder = new Order();
                     for (Order ord : orders) {
                         if (ord.getOrderID() == orderID) {
                             bills.add(new Bill(ord));
+                            payingOrder = ord;
                             countBill++;
                         }
                     }
 
                     Payment payment = new Payment();
 
-                    boolean success = true;
+                    boolean success = false;
                     do {
                         success = payment.processPayment(bills.get(countBill), sc);
-                        System.out.println();
                     } while (!success);
+
+                    int i=0;
+                    for(Reservation reservation: reservations){
+                        if(reservation.getCustomer().getCustomerID() == payingOrder.getCustomer().getCustomerID()){
+                            reservations.remove(reservation);
+
+                            for(Table table: tables){
+                                if(reservation.getTable().getTableId() == table.getTableId() ){
+                                    table.releaseTable(reservation.getTimeSession());
+                                    tables.set(i, table);
+                                    countReservation--;
+                                } 
+                                i++;      
+                            }
+                            break;
+                        }
+                    }
 
                     break;
                 case 3:

@@ -11,6 +11,7 @@ public class Order {
         return total_price;
     }
 
+    public Order(){}
     public Order(Customer customer, ArrayList<Food> foodList) {
         count++;
         this.orderID = count;
@@ -35,12 +36,12 @@ public class Order {
     }
 
     public void displayOrders() {
-        System.out.println("Order ID       : " + orderID);
-        System.out.println("Customer       : " + customer.getName());
+        System.out.println("Order ID        : " + orderID);
+        System.out.println("Customer        : " + customer.getName());
         System.out.println("Ordered Food: ");
         for (Food food : foodList) {
             System.out.println(food.getfoodID() + ". " + food.getfoodName());
         }
-        System.out.println("Total Price    : RM" + total_price);
+        System.out.println("Total Price     : RM" + total_price);
     }
 }
