@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 public class Restaurant {
 
+    // Method to read the menu from a CSV file and added the food list
     public static void readMenu(ArrayList<Food> food) {
         try {
             File tableFile = new File("src//Menu.csv");
@@ -29,6 +30,7 @@ public class Restaurant {
         }
     }
 
+    // Method to read the table information from a CSV file and added the tables list
     public static void readTables(ArrayList<Table> tables) {
         try {
             File tableFile = new File("src//Tablelist.csv");
@@ -46,6 +48,7 @@ public class Restaurant {
         }
     }
 
+    // Method to set the start time for a reservation
     public static LocalDateTime setStartTime(Scanner sc) {
         while (true) {
             System.out.print("Enter a Start date and Time (yyyy-MM-dd HH:mm): ");
@@ -65,6 +68,7 @@ public class Restaurant {
         }
     }
 
+    // Method to set the end time for a reservation
     public static LocalDateTime setEndTime(Scanner sc) {
         while (true) {
             System.out.print("Enter a End date and Time (yyyy-MM-dd HH:mm): ");
@@ -84,6 +88,7 @@ public class Restaurant {
         }
     }
 
+    // Main method: Entry point of the program
     public static void main(String[] args) {
         ArrayList<Customer> customers = new ArrayList<>();
         ArrayList<Reservation> reservations = new ArrayList<>();
@@ -97,8 +102,9 @@ public class Restaurant {
         int countReservation = -1;
         int customerCount = -1;
         int countBill = -1;
-        Restaurant.readTables(tables);
 
+        // Read tables and menu from CSV files
+        Restaurant.readTables(tables);
         Restaurant.readMenu(foods);
 
         int choice = 0;
@@ -118,14 +124,17 @@ public class Restaurant {
             choice = sc.nextInt();
             sc.nextLine();
 
+            // Clear console screen
             System.out.println("\u000c");
 
             switch (choice) {
                 case 0:
+                    // Exit the program
                     System.out.println("The program stopped...");
                     System.exit(0);
 
                 case 1:
+                    // Create a reservation
                     System.out.println("| Please provide your personal information as below: ");
                     System.out.print("First Name: ");
                     String firstName = sc.nextLine();
@@ -150,6 +159,7 @@ public class Restaurant {
                     }
                     customerCount++;
 
+                    // Check for table availability and create reservation
                     do {
                         System.out.println();
                         int numOfPeople;
@@ -189,7 +199,7 @@ public class Restaurant {
                         
                     } while (noTable);
 
-                    // order
+                    // Create an order
                     System.out.println();
                     System.out.println("+++++++++++++++++++");
                     System.out.println("| Create an order |");
@@ -215,12 +225,13 @@ public class Restaurant {
                         }
 
                     } while (foodChoice != 0);
-                    // add to list
+
+                    // Add order to the list
                     Order order = new Order(customers.get(customerCount), foodList);
                     orders.add(order);
                     countOrder++;
 
-                    // display
+                    // Display reservation and order
                     System.out.println("---------------------------");
                     reservations.get(countReservation).displayReservation();
                     System.out.println("---------------------------");
@@ -228,8 +239,7 @@ public class Restaurant {
 
                     break;
                 case 2:
-
-                    // payment
+                    // Process payment
                     System.out.println("+++++++++++++++++++++++");
                     System.out.println("| Payment Information |");
                     System.out.println("+++++++++++++++++++++++");
@@ -250,7 +260,8 @@ public class Restaurant {
                     do {
                         success = payment.processPayment(bills.get(countBill), sc);
                     } while (!success);
-
+                    
+                    // Release table after payment
                     int i=0;
                     for(Reservation reservation: reservations){
                         if(reservation.getCustomer().getCustomerID() == payingOrder.getCustomer().getCustomerID()){
@@ -270,6 +281,7 @@ public class Restaurant {
 
                     break;
                 case 3:
+                    // Leave a review
                     Review review = new Review();
                     System.out.print("Please enter your name: ");
                     String custName = sc.nextLine();
@@ -283,6 +295,7 @@ public class Restaurant {
                     break;
 
                 default:
+                    // Invalid choice
                     System.out.println("Invalid input! Please enter the provided option.");
                     break;
             }

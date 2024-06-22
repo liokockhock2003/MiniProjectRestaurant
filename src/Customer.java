@@ -1,3 +1,4 @@
+// Abstract class Customer extending User and implementing Discountable interface
 abstract class Customer extends User implements Discountable {
     private int custID;
 
@@ -10,6 +11,7 @@ abstract class Customer extends User implements Discountable {
         return custID;
     }
 
+    // Abstract method to be implemented by subclasses to get the discount
     @Override
     public abstract double getDiscount();
 }

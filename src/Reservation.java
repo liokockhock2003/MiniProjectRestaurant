@@ -1,5 +1,3 @@
-import java.time.LocalDateTime;
-
 public class Reservation {
     private static int reservationID;
     private int numOfPeople;

@@ -6,6 +6,7 @@ public class Regular extends Customer {
         this.regularDiscount = 0;
     }
 
+    // Override the getDiscount method from the Customer class to return the regular discount
     @Override
     public double getDiscount() {
         return regularDiscount;
